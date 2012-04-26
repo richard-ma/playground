@@ -1,0 +1,4 @@
+HELO gmail.com
+MAIL FROM: <test@gmail.com>
+RCPT TO: <richardma.org>
+QUIT
