@@ -35,7 +35,7 @@ class VideoFrame(wx.Frame):
         cv.EqualizeHist(grayscale, grayscale)# 灰度图直方图均衡化
 
         # detect objects
-        cascade = cv.Load('haarcascade_frontalface_alt.xml')
+        cascade = cv.Load('/usr/share/opencv/haarcascades/haarcascade_frontalface_alt.xml')
         faces = cv.HaarDetectObjects(grayscale, cascade, storage, 1.2, 2, 0,
                 (50, 50))#设置最小的人脸为50*50像素
 
