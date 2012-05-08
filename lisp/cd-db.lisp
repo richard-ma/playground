@@ -86,3 +86,9 @@
                 (if rating  (setf (getf row :rating) rating))
                 (if ripped-p (setf (getf row :ripped) ripped)))
               row) *db*)))
+
+(print (update (where :artist "Dixie Chicks") :rating 11))
+
+(defun delete-rows (selector-fn)
+  (setf *db* (remove-if selector-fn *db*)))
+
