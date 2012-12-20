@@ -1,0 +1,8 @@
+(defun foo (x)
+  (format t "parameter ~a~%" x)
+  (let ((x 2))
+    (format t "outer ~a~%" x)
+    (let ((x 3))
+      (format t "inner ~a~%" x))
+    (format t "outer ~a~%" x))
+  (format t "parameter ~a~%" x))
