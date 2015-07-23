@@ -1,0 +1,13 @@
+GEM
+  remote: http://ruby.taobao.org/
+  specs:
+    ruby-opencv (0.0.14)
+
+PLATFORMS
+  ruby
+
+DEPENDENCIES
+  ruby-opencv
+
+BUNDLED WITH
+   1.10.5
