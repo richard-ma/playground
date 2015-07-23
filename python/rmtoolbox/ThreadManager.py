@@ -8,9 +8,9 @@
 import Queue, threading, sys
 from threading import Thread
 
-class Worker(Thread):
+class WorkerThread(Thread):
 
-    """Docstring for Worker. """
+    """Docstring for WorkerThread. """
 
     worker_count = 0
     timeout = 1
@@ -25,8 +25,8 @@ class Worker(Thread):
         """
         Thread.__init__(self, **kwds)
 
-        self.id = Worker.worker_count
-        Worker.worker_count += 1
+        self.id = WorkerThread.worker_count
+        WorkerThread.worker_count += 1
 
         self.setDaemon(True)
 
@@ -42,7 +42,7 @@ class Worker(Thread):
         """
         while True:
             try:
-                callable, args, kwds = self.workQueue.get(timeout = Worker.timeout)
+                callable, args, kwds = self.workQueue.get(timeout = WorkerThread.timeout)
                 res = callable(*args, **kwds)
                 print "worker[%2d]: %s" % (self.id, str(res))
                 self.resultQueue.put(res)
@@ -52,9 +52,9 @@ class Worker(Thread):
                 print "worker[%2d]" % (self.id), sys.exc_info()[:2]
                 raise
 
-class WorkerManager():
+class ThreadManager():
 
-    """Docstring for WorkerManager. """
+    """Docstring for ThreadManager. """
 
     def __init__(self, num_of_workers = 10, timeout = 2):
         """@todo: to be defined1. """
@@ -74,7 +74,7 @@ class WorkerManager():
         """
 
         for i in range(num_of_workers):
-            worker = Worker(self.workQueue, self.resultQueue)
+            worker = WorkerThread(self.workQueue, self.resultQueue)
             self.workers.append(worker)
 
     def wait_for_complete(self):
@@ -128,7 +128,7 @@ if __name__ == '__main__':
     import time
     from random import randrange
 
-    wm = WorkerManager(5)
+    wm = ThreadManager(5)
     for i in range(15):
         print "adding %d" % i
         wm.add_job(some_work, 'Work %d' % i, randrange(2, 9))
