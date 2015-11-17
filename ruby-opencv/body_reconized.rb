@@ -7,7 +7,7 @@ include OpenCV
 
 window = GUI::Window.new("face detect")
 capture = CvCapture.open
-detector = CvHaarClassifierCascade::load("./haarcascades/haarcascade_smile.xml")
+detector = CvHaarClassifierCascade::load("./haarcascades/haarcascade-hand.xml")
 
 loop {
   image = capture.query
