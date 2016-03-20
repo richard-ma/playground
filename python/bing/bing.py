@@ -98,7 +98,7 @@ class getURLs(object):
 
 if __name__ == '__main__':
 
-    if len(sys.argv) < 1:
+    if len(sys.argv) < 3:
         print '[    Bing-URL-Tool     ]'
         print '[   edit by xy 151113  ]'
         print '[ any issues:i@cdxy.ME ]'
@@ -106,9 +106,10 @@ if __name__ == '__main__':
         pages = raw_input('how many pages u want download? >')
     elif len(sys.argv) == 3:
         # 添加命令行参数，方便shell调用
+        # python bing.py keyword pages
         keyword, pages = sys.argv[1:3]
     else:
-        print '[No keyword or pages]'
+        print 'Usage: python bing.py [keyword] [pages]'
         sys.exit(1)
 
     filename = str(keyword.replace(" ", "-") + '_Bing-URLs')
