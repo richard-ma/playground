@@ -17,11 +17,14 @@ class Filter(object):
         :returns: 包含关键字返回地址，否则返回None
 
         """
-        response = requests.get(url)
-        content = response.content
-        if content.find(keyword) > 0:
-            return url
-        else:
+        try:
+            response = requests.get(url, timeout = 1)
+            content = response.content
+            if content and (content.find(keyword) > 0):
+                return url
+            else:
+                return None
+        except:
             return None
 
 if __name__ == '__main__':
