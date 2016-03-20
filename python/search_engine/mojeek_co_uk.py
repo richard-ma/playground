@@ -3,6 +3,7 @@ import requests
 import re
 import sys
 import time
+import random
 from urllib import quote
 
 class getURLs(object):
@@ -58,6 +59,10 @@ class getURLs(object):
                 newpage_url = self.find_allURL(page_content)
                 all_url.extend(newpage_url)
                 all_url = [i for i in set(all_url)]
+
+                sleep_interval = random.randint(2, 4)
+                print '[*] random sleep %s' % str(sleep_interval)
+                time.sleep(sleep_interval) # 随机休息，防止服务器403
             else:
                 print '[*] total pages: %s' % (page_count / 10 + 1)
                 break
