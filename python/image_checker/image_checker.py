@@ -48,7 +48,7 @@ def write_find(output_filename, output_image_path, data):
     for r in data:
         old_filename = os.path.join(input_image_path, decode_filename(r[1]) + '.jpg')
         new_filename = os.path.join(output_image_path, r[2])
-        shutil.move(old_filename, new_filename)
+        shutil.copy(old_filename, new_filename)
 
     # write data
     data.insert(0, ['code', 'image', 'newimages']);
