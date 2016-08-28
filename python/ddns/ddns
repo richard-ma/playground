@@ -1,0 +1,52 @@
+#! /bin/sh
+
+### BEGIN INIT INFO
+# Provides:	     ddns
+# Required-Start:    
+# Required-Stop:     
+# Default-Start:     2 3 4 5
+# Default-Stop:      0 1 6
+# Short-Description: ddns
+# Description:       update self ip to dns server
+### END INIT INFO
+
+# INSTALL
+# update-rc.d ddns defaults
+#
+# UNINSTALL
+# update-rc.d -f ddns remove
+
+PATH=/sbin:/usr/sbin:/bin:/usr/bin
+. /lib/init/vars.sh
+
+. /lib/lsb/init-functions
+
+umask 022
+
+do_start () {
+	/usr/local/bin/ddns-dnspod.py &
+}
+
+do_stop () {
+	pid=$(ps -ex|grep ddns-dnspod.py|grep -v grep|awk '{print $1}');kill -9 $pid
+}
+
+
+case "$1" in
+  start)
+	do_start
+	;;
+  restart|reload|force-reload)
+	do_stop
+	do_start
+	;;
+  stop)
+	do_stop
+	;;
+  *)
+	echo "Usage: $0 start|stop" >&2
+	exit 3
+	;;
+esac
+
+:
