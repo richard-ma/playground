@@ -2,7 +2,7 @@
 #-*- coding:utf-8 -*-
 
 import requests
-import socket
+import re
 import time
 
 current_ip = None
@@ -12,8 +12,8 @@ def ddns(ip):
         'login_token': getToken(),
         'format': 'json',
         'domain_id': '10785701',
-        'record_id': '223819089',
-        'sub_domain': 'pi',
+        'record_id': '227613950',
+        'sub_domain': 'company',
         'record_type': 'A',
         'record_line': '默认',
         'value': ip,
@@ -22,9 +22,8 @@ def ddns(ip):
     return r.json()
 
 def getip():
-    sock = socket.create_connection(('ns1.dnspod.net', 6666))
-    ip = sock.recv(16)
-    sock.close()
+    ip = requests.get('http://1212.ip138.com/ic.asp').text
+    ip = re.search('\[(.*)\]', ip).group(0)[1:-1]
     return ip
 
 def getToken():
