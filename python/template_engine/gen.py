@@ -51,6 +51,7 @@ def load_data(data_file_name):
 
                 for element in row:
                     if ':' in element:
+                        # use column_name:another_column_name to reference another column
                         k, v = element.split(':')
                         logger.debug("k: %s, v: %s" % (k, v))
                         reference_column[k] = v
@@ -65,6 +66,7 @@ def load_data(data_file_name):
                 parsed_row = dict(zip(variables_name, row))
                 logger.debug("parsed_row: %s" % (parsed_row))
 
+                # add column refrence data
                 for k, v in reference_column.iteritems():
                     parsed_row[k] = parsed_row[v]
                 data.append(parsed_row)
