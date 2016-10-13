@@ -6,7 +6,6 @@ import logging.handlers
 import csv
 import os
 
-
 # Load Template
 # template file is end with .tpl in template directory.
 # return template string.
@@ -63,7 +62,7 @@ def check_file_exsists(file_name):
 
 def enable_logger(level = logging.ERROR):
     # log file name
-    log_file_name = './log'
+    log_file_name = './log.log'
 
     # Set logging handler
     handler = logging.handlers.RotatingFileHandler(log_file_name,
