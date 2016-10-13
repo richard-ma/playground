@@ -2,3 +2,5 @@
 *.o
 *-bin
 *.cookie
+
+./python/template_engine/output/*
