@@ -27,6 +27,7 @@ def load_template(template_file_name):
 # Load Data
 # data file is end with .csv in data directory.
 # data file write with csv format, and load it to array.
+# first line of data is variables name of values.
 # return data array.
 def load_data(data_file_name):
     global logger
@@ -36,22 +37,59 @@ def load_data(data_file_name):
         logger.error("No such file: %s" % (data_file_name))
 
     # load it
-    data = []
+    data = list()
+    first_line_flg = True
     with open(data_file_name, 'rb') as datafile:
         reader = csv.reader(datafile)
         for row in reader:
-            data.append(row)
+            if first_line_flg:
+                # first line
+                first_line_flg = False
+                variables_name = row
+            else:
+                # real data
+                parsed_row = dict(zip(variables_name, row))
+                data.append(parsed_row)
 
     logger.debug("Data: %s" % (data))
 
     return data
 
 # Replace & Write file
-def write_output(generate_content, output_file_name, output_path = './output/'):
-    pass
+def write_result_file(generated_content, output_file_name, output_path = './output/'):
+    output_file_name = "%s%s" % (output_path, output_file_name)
+    output_file = open(output_file_name, 'w')
+    output_file.write(generated_content)
 
-def replace(template, data):
-    pass
+def generate_for_one_line_data(template, one_line_data):
+    global logger
+
+    for k, v in one_line_data.iteritems():
+        old = "{$%s}" % (k)
+        new = v
+        if k == 'output_file':
+            # skipped output_file column
+            logger.debug("Skipped output_file column")
+            continue
+        else:
+            template = template.replace(old, new)
+            logger.debug("Replacing %s -> %s" % (old, new))
+    return template
+
+def generate(template, data):
+    global logger
+
+    for one_line_data in data:
+        # get result
+        result = generate_for_one_line_data(template, one_line_data)
+        logger.debug("Result: %s" % (result))
+
+        # get output file name
+        output_file_name = one_line_data['output_file'] # get output file name form data 'output_file' column
+        logger.debug("Output file name: %s" % (output_file_name))
+
+        # write file
+        write_result_file(result, output_file_name)
 
 def usage():
     print "Usage: \n"
@@ -95,6 +133,9 @@ def main(argv):
     data_file_name = "./data/%s.csv" % (name)
     logger.debug("Data file name: %s" % (data_file_name))
     data = load_data(data_file_name)
+
+    # generate result and write to file
+    generate(template, data)
 
 # Global Variables
 logger = enable_logger(logging.DEBUG)
