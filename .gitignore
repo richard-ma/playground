@@ -6,3 +6,4 @@
 
 /python/template_engine/output
 /python/template_engine/output/*
+/python/template_engine/data/*
