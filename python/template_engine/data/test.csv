@@ -1,4 +1,4 @@
-var1,var2,var3,var4,output_file
-Row1Col1,Row1Col2,Row1Col3,Row1Col4,file1
-Row2Col1,Row2Col2,Row2Col3,Row2Col4,file2
-Row3Col1,Row3Col2,Row3Col3,Row3Col4,file3
+var1,var2,var3,var4,output_file:var1
+Row1Col1,Row1Col2,Row1Col3,Row1Col4
+Row2Col1,Row2Col2,Row2Col3,Row2Col4
+Row3Col1,Row3Col2,Row3Col3,Row3Col4

@@ -41,14 +41,32 @@ def load_data(data_file_name):
     first_line_flg = True
     with open(data_file_name, 'rb') as datafile:
         reader = csv.reader(datafile)
+        variables_name = list()
+        reference_column = dict()
+
         for row in reader:
             if first_line_flg:
                 # first line
                 first_line_flg = False
-                variables_name = row
+
+                for element in row:
+                    if ':' in element:
+                        k, v = element.split(':')
+                        logger.debug("k: %s, v: %s" % (k, v))
+                        reference_column[k] = v
+                    else:
+                        variables_name.append(element)
+
+                logger.debug("variables_name: %s" % (variables_name))
             else:
                 # real data
+                logger.debug("real data row: %s" % (row))
+
                 parsed_row = dict(zip(variables_name, row))
+                logger.debug("parsed_row: %s" % (parsed_row))
+
+                for k, v in reference_column.iteritems():
+                    parsed_row[k] = parsed_row[v]
                 data.append(parsed_row)
 
     logger.debug("Data: %s" % (data))
