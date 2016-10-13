@@ -14,7 +14,8 @@ def load_template(template_file_name):
 
     # check template file exsists
     if not check_file_exsists(template_file_name):
-        logger.error("No such file: %s" % (template_file_name))
+        logger.error("Template file not found: %s" % (template_file_name))
+        sys.exit(1)
 
     # load it
     template_file = open(template_file_name, 'r')
@@ -34,7 +35,8 @@ def load_data(data_file_name):
 
     # check data file exsists
     if not check_file_exsists(data_file_name):
-        logger.error("No such file: %s" % (data_file_name))
+        logger.error("Data file not found: %s" % (data_file_name))
+        sys.exit(1)
 
     # load it
     data = list()
@@ -77,6 +79,12 @@ def load_data(data_file_name):
 
 # Replace & Write file
 def write_result_file(generated_content, output_file_name, output_path = './output/'):
+    global logger
+
+    if not os.path.exists(output_path):
+        logger.error("Output directory not found: %s" % (output_path))
+        sys.exit(1)
+
     output_file_name = "%s%s" % (output_path, output_file_name)
     output_file = open(output_file_name, 'w')
     output_file.write(generated_content)
@@ -128,7 +136,7 @@ def enable_logger(level = logging.ERROR):
             backupCount = 5)
 
     # Setting logging format
-    fmt = "%(asctime)s [%(levelname)s] %(filename)s[%(lineno)s]:%(message)s"
+    fmt = "%(asctime)s [%(levelname)s] %(filename)s[%(lineno)s]: %(message)s"
     formatter = logging.Formatter(fmt)
     handler.setFormatter(formatter)
 
