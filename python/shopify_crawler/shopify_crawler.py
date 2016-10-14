@@ -32,7 +32,10 @@ def save_seed_domains(seed_domains_file_name, seed_domains):
 
 def save_domains(file_name, domains, save_type):
     f = open(file_name, save_type)
-    f.writelines(["%s\n" % (element) for element in domains])
+    if isinstance(domains, basestring):
+        f.writelines("%s\n" % (domains))
+    else:
+        f.writelines(["%s\n" % (element) for element in domains])
 
 def reversed_query(domain):
     url = "http://www.114best.com/ip/114.aspx?w=%s" % (domain)
