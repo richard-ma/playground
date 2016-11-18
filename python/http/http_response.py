@@ -1,5 +1,7 @@
 #!/usr/bin/env python
 
-class HttpResponse():
+from http_message import HttpMessage
+
+class HttpResponse(HttpMessage):
     def __init__(self):
         pass

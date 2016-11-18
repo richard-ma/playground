@@ -2,7 +2,9 @@
 
 import socket
 
-class CoreServer():
+from http_request import HttpRequest
+
+class CoreServer(object):
 
     address = 'localhost'
     port = 8001
@@ -18,7 +20,13 @@ class CoreServer():
                 connection.settimeout(5)
                 buf = connection.recv(1024)
                 if DEBUG:
-                    print buf
+                    req = HttpRequest(buf)
+                    print req.start_line
+                    print req.method
+                    print req.target
+                    print req.httpVersion
+                    print req.header
+                    print req.body
                 else:
                     pass
             except socket.timeout:
