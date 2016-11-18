@@ -12,10 +12,7 @@ def main():
         try:
             connection.settimeout(5)
             buf = connection.recv(1024)
-            if buf == '1':
-                connection.send('welcome to server!')
-            else:
-                connection.send('please go out!')
+            print buf
         except socket.timeout:
             print 'timeout'
         connection.close()
