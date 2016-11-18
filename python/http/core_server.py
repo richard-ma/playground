@@ -3,6 +3,7 @@
 import socket
 
 from http_request import HttpRequest
+from http_response import HttpResponse
 
 class CoreServer(object):
 
@@ -21,17 +22,15 @@ class CoreServer(object):
                 buf = connection.recv(1024)
                 if DEBUG:
                     req = HttpRequest(buf)
-                    print req.start_line
-                    print req.method
-                    print req.target
-                    print req.httpVersion
-                    print req.header
-                    print req.body
+                    res = HttpResponse()
+                    print req
+                    print res
                 else:
                     pass
             except socket.timeout:
                 print 'timeout'
-            connection.close()
+            finally:
+                connection.close()
 
 if __name__ == '__main__':
     DEBUG = True # set debug mode
