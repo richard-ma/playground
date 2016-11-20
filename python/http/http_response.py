@@ -12,6 +12,8 @@ class HttpResponse(HttpMessage):
 
     def setStatus(self, code):
         self.statusCode, self.reasonPhrase = self._status(code)
+        if code > 400:
+            self.setBody(self._default_body(self.statusCode, self.reasonPhrase))
 
     def setBody(self, body):
         self.body = body
@@ -24,6 +26,9 @@ class HttpResponse(HttpMessage):
             return (code, 'Not Found')
         elif code == 500:
             return (code, 'Internal Server Error')
+
+    def _default_body(self, code, message):
+        return '<html><head><title>%s</title></head><body><h1>%d %s</h1></body></html>' % (message, code, message)
 
     def _startLine(self):
         self.startLine = "%s %d %s" % (
