@@ -20,9 +20,10 @@ class CoreServer(object):
             try:
                 connection.settimeout(5)
                 buf = connection.recv(1024)
+                req = HttpRequest(buf)
+                res = HttpResponse()
+                connection.send(res.__str__())
                 if DEBUG:
-                    req = HttpRequest(buf)
-                    res = HttpResponse()
                     print req
                     print res
                 else:
