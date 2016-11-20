@@ -13,6 +13,10 @@ class HttpResponse(HttpMessage):
     def setStatus(self, code):
         self.statusCode, self.reasonPhrase = self._status(code)
 
+    def setBody(self, body):
+        self.body = body
+        self.header['Content-Lenght'] = str(len(self.body))
+
     def _status(self, code):
         if code == 200:
             return (code, 'OK')
