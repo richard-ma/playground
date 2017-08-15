@@ -9,10 +9,10 @@ class Foo
     private     $private_var = 'private_var'; // $obj->private_var Undefined
 
     // constant
-    const CONSTANT = 'constant_var';
+    const CONSTANT = 'Foo constant_var';
 
     // static
-    static public $static_var = 'static_var';
+    public static $static_var = 'static_var';
 
     // construct method
     function __construct() {
@@ -35,16 +35,25 @@ class Foo
     protected function protected_method() { // $obj->protected_method Fatal Error
     }
 
-    rivate function private_method() { // $obj->private_method Fatal Error
+    private function private_method() { // $obj->private_method Fatal Error
+    }
+
+    public function static_method() {
+        return self::$static_var;
     }
 }
 
 class Bar extends Foo
 {
+    // subclass constant
+    const CONSTANT = 'bar constant';
+
     // construct method call parent construct method
     function __construct() {
         parent::__construct();
         print get_called_class() . " construct method in Bar\n\n";
+        print self::CONSTANT . " constant in Bar\n\n";
+        print parent::CONSTANT . " constant in Bar\n\n";
     }
 }
 
@@ -63,6 +72,10 @@ echo "\n\n";
 
 // call object method
 echo $foo->display();
+echo "\n\n";
+
+// static variable & function
+echo $foo->static_method();
 echo "\n\n";
 
 /******************************************************************************/
