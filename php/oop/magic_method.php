@@ -34,6 +34,20 @@ class MyClass
         echo "invoking invoking\n";
         var_dump($x);
     }
+
+    // var_export invoking
+    // $an_array is $var => value of $obj
+    public static function __set_state($an_array) {
+        echo "set_state invoking\n";
+        var_dump($an_array);
+    }
+
+    // var_dump invoking
+    public function __debuginfo() {
+        return [
+            'username' => $this->username . ' in debuginfo()'
+        ];
+    }
 }
 
 // TEST __sleep() __wakeup()
@@ -43,6 +57,7 @@ $storage = serialize($myobj); // serialize -> __sleep()
 echo $storage."\n";
 $readItem = unserialize($storage); // unserialize -> wakeup()
 $readItem->show();
+echo "\n";
 
 // TEST __toString()
 echo $myobj."\n";
@@ -50,3 +65,12 @@ echo $myobj."\n";
 // TEST __invoke()
 $myobj('test');
 var_dump(is_callable($myobj));
+echo "\n";
+
+// TEST __set_state()
+var_export($myobj);
+echo "\n";
+
+// TEST __debuginfo()
+var_dump($myobj);
+echo "\n";
