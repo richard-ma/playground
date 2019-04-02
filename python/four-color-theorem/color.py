@@ -1,6 +1,8 @@
 #!/usr/bin/env python3
 # encoding: utf-8
 
+import sys
+
 def readData(filename):
     filedata = list()
     with open(filename, 'r') as f:
@@ -38,31 +40,30 @@ def print_matrix(matrix):
 class Solution():
     def __init__(self, data, colors_limit):
         self.data = data
-        self.colors = colors_limit
+        self.colors = list(range(colors_limit))
 
     def solve(self, i, ans):
         if i >= len(self.data):
             return ans
 
-        used = list()
+        used = set()
         for j in range(i):
             if self.data[j][i] == 1: # 检测到之前涂色的点
-                if ans[i] != -1: # 与该国家相邻的国家已经被涂色
-                    if not ans[i] in used:
-                        used.append(ans[i]) # 将国家的颜色添加到已用颜色列表
+                if ans[j] != -1: # 与该国家相邻的国家已经被涂色
+                    if not ans[j] in used:
+                        used.add(ans[j]) # 将相邻国家的颜色添加到已用颜色列表
                         print(used)
-                else: # 该国家未被涂色
-                    for color in self.colors:
-                        if not color in used:
-                            ans[i] = color # 选择一个周围国家未使用的颜色给该国家涂色
-                            self.solve(i+1, ans+[])
 
-                    if ans[i] == -1: # 没有可用的颜色，此种涂色方案不可行
-                        return False
-        return ans
+        for color in self.colors:
+            if not color in used:
+                ans[i] = color # 选择一个周围国家未使用的颜色给当前未涂色的国家涂色
+                return self.solve(i+1, ans+[]) # 处理完当前国家，处理下一个国家
+
+        if ans[i] == -1: # 颜色用光了，此种涂色方案不可行
+            return False
 
 if __name__ == '__main__':
-    filename = 'color.dat'
+    filename = sys.argv[1] if len(sys.argv) > 1 and sys.argv[1] else 'color.dat'
     data = readData(filename)
     print_matrix(data)
 
