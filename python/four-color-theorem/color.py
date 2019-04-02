@@ -52,7 +52,7 @@ class Solution():
                 if ans[j] != -1: # 与该国家相邻的国家已经被涂色
                     if not ans[j] in used:
                         used.add(ans[j]) # 将相邻国家的颜色添加到已用颜色列表
-                        print(used)
+        print(used)
 
         for color in self.colors:
             if not color in used:
