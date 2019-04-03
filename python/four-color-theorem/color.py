@@ -30,13 +30,13 @@ def print_matrix(matrix):
     for j in range(c):
         print("%4d" % (j+1), end='')
     print()
-    print("-" * (c * 4 + 8))
+    print("-" * (c * 4 + 16))
 
     for i in range(r):
         print("%4d%4s" % (i+1, '|'), end='')
         for j in range(c):
             print(("%4d" % (matrix[i][j]) if matrix[i][j] else ("%4s" % (' '))), end='')
-        print()
+        print("%4s%4d" % ('|', i+1))
     print()
 
 class Solution():
