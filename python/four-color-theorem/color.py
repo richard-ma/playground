@@ -17,6 +17,8 @@ def readData(filename):
     data = [[0 for i in range(l)] for j in range(l)]
 
     for i, node in enumerate(filedata):
+        if len(node) == 1 and node[0] == 0:
+            continue
         for n in node:
             data[i][n-1] = 1
 
